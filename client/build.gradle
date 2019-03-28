@@ -4,6 +4,7 @@ plugins {
   id 'com.moowork.node' version '1.2.0'
 }
 
+
 node {
   version = '8.15.1'
   download = true

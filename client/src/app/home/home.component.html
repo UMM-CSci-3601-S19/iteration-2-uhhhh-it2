@@ -1,12 +1,30 @@
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<meta name="google-signin-Iteration2" content="936642482862-79h00b2t5r2l7n0ld19vp6hf6887p2db.apps.googleusercontent.com">
 <div layout-gt-sm="row">
+
   <div flex-gt-sm="80" flex-offset-gt-sm="10">
+    <div *ngIf="!appService.isSignedIn()" class="g-signin2" (click)="signIn()"></div>
+
     <mat-card>
+      <div *ngIf="!appService.isSignedIn()" class="g-signin2" (click)="signIn()"></div>
+
       <mat-card-title id="hello-world">{{ this.text }}</mat-card-title>
-      <mat-card-subtitle>this is a card</mat-card-subtitle>
+      <mat-card-subtitle>this is a</mat-card-subtitle>
       <mat-divider></mat-divider>
       <mat-card-content>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
         card content
       </mat-card-content>
+
+      <script>
+        $('#signinButton').click(function() {
+          // signInCallback defined in step 6.
+          auth2.grantOfflineAccess().then(signInCallback);
+        });
+      </script>
+
     </mat-card>
   </div>
 </div>

@@ -16,7 +16,8 @@ dependencies {
   compile 'org.slf4j:slf4j-simple:1.7.26'
   compile 'com.google.code.gson:gson:2.8.5'
   compile 'org.mongodb:mongodb-driver:3.10.1'
-
+  compile 'com.google.apis:google-api-services-oauth2:v1-rev153-1.25.0'
+  compile 'com.google.apis:google-api-services-drive:v3-rev156-1.25.0'
   testCompile 'junit:junit:4.12'
 }
 
