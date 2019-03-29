@@ -3,7 +3,9 @@ import {Ride} from './ride';
 import {FormControl, Validators, FormGroup, FormBuilder} from "@angular/forms";
 import {RideListComponent} from "./ride-list.component";
 import {RideListService} from "./ride-list.service";
+import {ValidatorService} from 'app/validator.service';
 import {Observable} from "rxjs/Observable";
+
 
 @Component({
   selector: 'add-ride.component',
