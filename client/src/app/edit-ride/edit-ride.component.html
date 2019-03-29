@@ -23,8 +23,7 @@ because of this, add ride validators and form types remain-->
               looking for a ride</mat-radio-button>
             <mat-error *ngFor="let validation of add_ride_validation_messages.driving">
               <mat-error class="error-message" id="driving-error"
-                         *ngIf="addRideForm.get('driving').hasError(validation.type) &&
-                         (addRideForm.get('driving').dirty || addRideForm.get('driving').touched)">
+                         *ngIf="addRideForm.get('driving').hasError(validation.type)">
                 {{validation.message}}
               </mat-error>
             </mat-error>

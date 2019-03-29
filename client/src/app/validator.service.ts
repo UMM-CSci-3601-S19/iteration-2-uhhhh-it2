@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
+import {Observable, of } from "rxjs/Observable";
 import {Ride} from "./rides/ride";
+
+//might not need, but the getRides method may be useful
+import {RideListService} from "./rides/ride-list.service";
 
 
 @Injectable({
@@ -7,5 +11,9 @@ import {Ride} from "./rides/ride";
 })
 export class ValidatorService {
 
-  constructor() { }
+  constructor(private validatorService: ValidatorService) { }
+
+  validateRide(): Observable<Ride> {
+
+  }
 }
