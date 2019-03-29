@@ -34,7 +34,6 @@ export class AddRideComponent implements OnInit {
 
   // Inject the RideListService into this component.
   constructor(public rideListService: RideListService, private fb: FormBuilder) {
-
   }
 
   add_ride_validation_messages = {
