@@ -81,7 +81,7 @@
               <span *ngIf="ride.departureTime">{{ride.departureTime}}</span>
             </div>
             <button mat-raised-button
-                    (click)="this.requestRideInfo(ride._id.$oid)"
+                    (click)="this.requestRideID(ride._id.$oid)"
                     routerLink="/editride"
                     color="primary"
                     type="button"
