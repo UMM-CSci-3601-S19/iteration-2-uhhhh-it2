@@ -13,7 +13,7 @@ export class ValidatorService {
 // readonly baseUrl: string = environment.API_URL + 'ride_validator';
 //   private rideValidatorUrl: string = this.baseUrl;
 
-  constructor(private validatorService: ValidatorService,  private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) { }
 
   ride_validation_messages = {
 
