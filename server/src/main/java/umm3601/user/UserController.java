@@ -98,15 +98,18 @@ public class UserController {
   }
 
 
-  /**
-   * Helper method which appends received user information to the to-be added document
-   *
-   * @param name the name of the new user
-   * @param age the age of the new user
-   * @param company the company the new user works for
-   * @param email the email of the new user
-   * @return boolean after successfully or unsuccessfully adding a user
-   */
+
+
+
+    /**
+     * Helper method which appends received user information to the to-be added document
+     *
+     * @param name the name of the new user
+     * @param age the age of the new user
+     * @param company the company the new user works for
+     * @param email the email of the new user
+     * @return boolean after successfully or unsuccessfully adding a user
+     */
   public String addNewUser(String name, int age, String company, String email) {
 
     Document newUser = new Document();

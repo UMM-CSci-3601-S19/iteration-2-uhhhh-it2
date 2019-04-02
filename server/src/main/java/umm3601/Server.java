@@ -1,5 +1,6 @@
 package umm3601;
 
+import com.google.gson.*;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import spark.Request;
@@ -11,6 +12,8 @@ import umm3601.user.UserRequestHandler;
 import umm3601.ride.RideController;
 import umm3601.ride.RideRequestHandler;
 
+
+import com.google.gson.GsonBuilder;
 
 import com.google.api.client.googleapis.auth.oauth2.*;
 import com.google.api.services.oauth2.*;
@@ -24,20 +27,20 @@ import com.google.api.services.oauth2.Oauth2Request;
 import com.google.api.services.drive.Drive;
 
 
-import com.google.*;
+//import com.google.*;
 
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.Constants.REDIRECT_URI;
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public class Server {
   private static final String databaseName = "dev";
   private static final int serverPort = 4567;
 
-  public static void main(String[] args) {
-
+  public static void main(String[] args ) throws IOException {
 
 
     // DATABASE
@@ -120,59 +123,72 @@ public class Server {
     });
 
     // (Receive authCode via HTTPS POST)
-    if (request.getHeader("X-Requested-With") == null) {
-      // Without the `X-Requested-With` header, this request could be forged. Aborts.}
-      // Set path to the Web application client_secret_*.json file you downloaded from the // Google API Console:
-     //https://console.developers.google.com/apis/credentials
-// You can also find your Web application client ID and client secret from the // console and specify them directly when you create the GoogleAuthorizationCodeTokenRequest // object.
-      String CLIENT_SECRET_FILE = "./credentials.json";
+    post("login", (req, res) -> {
 
-// Exchange auth code for access token
-      GoogleClientSecrets clientSecrets =
-        GoogleClientSecrets.load(
-          JacksonFactory.getDefaultInstance(), new
-            FileReader(CLIENT_SECRET_FILE));
-      GoogleTokenResponse tokenResponse =
-        new GoogleAuthorizationCodeTokenRequest(
-          new NetHttpTransport(),
-          JacksonFactory.getDefaultInstance(),              "https://www.googleapis.com/oauth2/v4/token",
-          clientSecrets.getDetails().getClientId(),
-          clientSecrets.getDetails().getClientSecret(),
-          authCode,
+      Gson gson = new Gson();
+      JsonElement element = gson.fromJson(req.body(), JsonElement.class);
+      JsonObject jsonObj = element.getAsJsonObject();
 
-          REDIRECT_URI)
+      String authCode = jsonObj.get("code").toString(); // assuming the .get("code") returns the value
 
-// Specify the same redirect URI that you use with your web                             // app. If you don't have a web version of your app, you can                // specify an empty string.
-          .execute();
-      String accessToken = tokenResponse.getAccessToken();
-// Use access token to call API
+        try {
+          // We can create this later to keep our secret safe
 
-      GoogleCredential credential = new GoogleCredential().setAccessToken(accessToken);
+          String CLIENT_SECRET_FILE = "./src/main/java/umm3601/server_files/client_secret_file.json";
 
-      Drive drive = new Drive.Builder(new NetHttpTransport(), JacksonFactory.getDefaultInstance(), credential)
-
-          .setApplicationName("Auth Code Exchange Demo")
-
-          .build();
-
-      File file = drive.files().get("appfolder").execute();
-
-// Get profile info from ID token
-
-      GoogleIdToken idToken = tokenResponse.parseIdToken();
-      GoogleIdToken.Payload payload = idToken.getPayload();
-      String userId = payload.getSubject();
-// Use this value as a key to identify a user.
-      String email = payload.getEmail();
-      boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
-      String name = (String) payload.get("name");
-      String pictureUrl = (String) payload.get("picture");
-      String locale = (String) payload.get("locale");
-      String familyName = (String) payload.get("family_name");
-      String givenName = (String) payload.get("given_name");
+          GoogleClientSecrets clientSecrets =
+            GoogleClientSecrets.load(
+              JacksonFactory.getDefaultInstance(), new FileReader(CLIENT_SECRET_FILE));
 
 
-  }}
+          GoogleTokenResponse tokenResponse =
+            new GoogleAuthorizationCodeTokenRequest(
+              new NetHttpTransport(),
+              JacksonFactory.getDefaultInstance(),
+              "https://www.googleapis.com/oauth2/v4/token",
+              clientSecrets.getDetails().getClientId(),
+
+              // Replace clientSecret with the localhost one if testing
+              clientSecrets.getDetails().getClientSecret(),
+              authCode,
+              "http://localhost:9000")
+              //Not sure if we have a redirectUri
+
+              // Specify the same redirect URI that you use with your web
+              // app. If you don't have a web version of your app, you can
+              // specify an empty string.
+              .execute();
+
+
+          GoogleIdToken idToken = tokenResponse.parseIdToken();
+          GoogleIdToken.Payload payload = idToken.getPayload();
+          String subjectId = payload.getSubject();  // Use this value as a key to identify a user.
+          String email = payload.getEmail();
+          boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
+          String name = (String) payload.get("name");
+          String pictureUrl = (String) payload.get("picture");
+          String locale = (String) payload.get("locale");
+          String familyName = (String) payload.get("family_name");
+          String givenName = (String) payload.get("given_name");
+
+          //Debugging code
+          //System.out.println(subjectId);
+          //System.out.println(email);
+          //System.out.println(name);
+          //System.out.println(locale);
+
+        return userController.addNewUser(subjectId, givenName, familyName);
+
+        } catch (Exception e) {
+          System.out.println(e);
+        }
+
+        return "";
+
+    }
+    );
+
+  };
 
 
   // Enable GZIP for all responses
