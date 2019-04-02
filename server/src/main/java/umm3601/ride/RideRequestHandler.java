@@ -73,6 +73,11 @@ public class RideRequestHandler {
     return new DateFormatSymbols().getMonths()[month-1];
   }
 
+  public String editExistingRide(Request req, Response res) {
+    System.out.println("\nReached editExistingRide\n");
+    return "editExistingRide";
+  }
+
   /**
    * Method called from Server when the 'api/rides/new' endpoint is received.
    * Gets specified rides info from request and calls addNewRide helper method
