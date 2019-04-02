@@ -17,10 +17,11 @@ import {RideListService} from "../rides/ride-list.service";
   providers: [ RideListComponent ],
 })
 
-
 export class EditRideComponent implements OnInit {
 
   public rides: Ride[];
+
+  public rideID: string = '';
 
   private highlightedID: string = '';
 
@@ -37,7 +38,7 @@ export class EditRideComponent implements OnInit {
   // Please keep this as the default value, or you will have problems with form validation / seats available as a rider.
   public isDriving: boolean = true;
 
-  constructor(public rideListService: RideListService, private fb: FormBuilder) { }
+  constructor(public rideListService: RideListService, private fb: FormBuilder, public rideListComponent: RideListComponent) { }
 
   edit_ride_validation_messages = {
 
@@ -68,7 +69,7 @@ export class EditRideComponent implements OnInit {
 
   editRide(): void {
     const editedRide: Ride = {
-      _id: '',
+      _id: this.rideListComponent.requestedID,
       driver: this.rideDriver,
       notes: this.rideNotes,
       seatsAvailable: this.rideSeats,
