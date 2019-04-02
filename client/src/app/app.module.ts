@@ -27,6 +27,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { EditRideComponent } from './edit-ride/edit-ride.component';
 
+import {MatCheckboxModule}  from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { EditRideComponent } from './edit-ride/edit-ride.component';
     MatCardModule,
     MatDatepickerModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCheckboxModule
   ],
   declarations: [
     AppComponent,

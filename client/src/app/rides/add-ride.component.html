@@ -7,18 +7,16 @@
         <mat-card-title id="ride-add-title" class="rideAddTitle">Add a Ride</mat-card-title>
         <mat-card-content class="addARideContent">
 
-          <mat-radio-group flex [(ngModel)]="isDriving" formControlName="driving" required>
+          <mat-radio-group flex [(ngModel)]="rideDriving" formControlName="driving" required>
             <br>
             I am...
             <br>
             <br>
-            <mat-radio-button id="isDrivingFORM" [value] = "true" > driving</mat-radio-button>
-            <mat-radio-button id="isNotDrivingFORM" [value] = "false" (click)="setRideSeats()">
-              looking for a ride</mat-radio-button>
+            <mat-radio-button id="isDrivingFORM" [value] = true > driving</mat-radio-button>
+            <mat-radio-button id="isNotDrivingFORM" [value] = false (click)="setRideSeats()"> looking for a ride</mat-radio-button>
             <mat-error *ngFor="let validation of add_ride_validation_messages.driving">
               <mat-error class="error-message" id="driving-error"
-                         *ngIf="addRideForm.get('driving').hasError(validation.type) &&
-                         (addRideForm.get('driving').dirty || addRideForm.get('driving').touched)">
+                         *ngIf="addRideForm.get('driving').hasError(validation.type) && (addRideForm.get('driving').dirty || addRideForm.get('driving').touched)">
                 {{validation.message}}
               </mat-error>
             </mat-error>
@@ -38,7 +36,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field *ngIf="isDriving">
+          <mat-form-field *ngIf="rideDriving">
               <input type="number" class="inputRideInfo" matInput #input id="seatsAvailableField"
                      placeholder="Seats Available"
                      [(ngModel)]="rideSeats" formControlName="seatsAvailable">
@@ -100,6 +98,15 @@
             <textarea class="inputRideInfo" matInput #input id="notesField" placeholder="Notes"
                       [(ngModel)]="rideNotes" formControlName="notes"></textarea>
           </mat-form-field>
+
+          <br/>
+
+          <label> I would prefer my ride to be... </label>
+
+          <br/>
+
+          <mat-checkbox [(ngModel)]="rideNonSmoking" id="tryThis" class="checkboxNonSmoking"
+                        formControlName="nonSmoking"> Non-smoking </mat-checkbox>
 
         </mat-card-content>
 
