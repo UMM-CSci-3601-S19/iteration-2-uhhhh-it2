@@ -27,7 +27,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { EditRideComponent } from './edit-ride/edit-ride.component';
 
-import {MatCheckboxModule}  from "@angular/material/checkbox";
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {ValidatorService} from './validator.service';
 
 
 @NgModule({
@@ -45,20 +46,22 @@ import {MatCheckboxModule}  from "@angular/material/checkbox";
   declarations: [
     AppComponent,
     HomeComponent,
-
-    UserListComponent, RideListComponent,
-
     UserComponent,
-
-    AddUserComponent, AddRideComponent, EditRideComponent,
-
+    UserListComponent,
+    RideListComponent,
+    AddUserComponent,
+    AddRideComponent,
+    EditRideComponent,
   ],
   providers: [
-    UserListService, RideListService,
+    UserListService,
+    RideListService,
+    ValidatorService,
     {provide: APP_BASE_HREF, useValue: '/'},
   ],
   entryComponents: [
-    AddUserComponent, AddRideComponent,
+    AddUserComponent,
+    AddRideComponent,
     EditRideComponent
   ],
   bootstrap: [AppComponent]

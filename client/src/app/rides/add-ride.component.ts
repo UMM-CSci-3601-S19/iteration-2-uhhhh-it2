@@ -1,9 +1,8 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Ride} from './ride';
-import {FormControl, Validators, FormGroup, FormBuilder} from "@angular/forms";
 import {RideListComponent} from "./ride-list.component";
 import {RideListService} from "./ride-list.service";
-import {ValidatorService} from 'app/validator.service';
+import {ValidatorService} from '../validator.service';
 import {Observable} from "rxjs/Observable";
 
 
@@ -11,16 +10,15 @@ import {Observable} from "rxjs/Observable";
   selector: 'add-ride.component',
   templateUrl: 'add-ride.component.html',
   styleUrls: ['./add-ride.component.scss'],
-  providers: [ RideListComponent],
+  providers: [ RideListComponent ],
+
 })
 
 export class AddRideComponent implements OnInit {
 
   public rides: Ride[];
 
-  private highlightedID: string = '';
-
-  public addRideForm: FormGroup;
+  private highlightedID: string;
 
   public rideDriver: string;
   public rideNotes: string;
@@ -29,43 +27,16 @@ export class AddRideComponent implements OnInit {
   public rideDestination: string;
   public rideDepartureDate: string;
   public rideDepartureTime: string;
-  public rideNonSmoking: boolean = false;
+  public rideNonSmoking: false;
 
 
   // Please keep this as the default value, or you will have problems with form validation / seats available as a rider.
-  public rideDriving: boolean = true;
+  public rideDriving: true;
 
 
   // Inject the RideListService into this component.
-  constructor(public rideListService: RideListService, private fb: FormBuilder) {
+  constructor(public rideListService: RideListService, public validatorService: ValidatorService) {
   }
-
-  add_ride_validation_messages = {
-
-    'driver': [
-      {type: 'required', message: 'Please enter your name'},
-      {type: 'minlength', message: 'Please enter your full name'},
-      {type: 'pattern', message: 'Please enter a valid name'}
-    ],
-
-    'seatsAvailable': [
-      {type: 'required', message: 'Please specify how many seats you\'re offering'},
-      {type: 'min', message: 'Please offer at least 1 seat'},
-      {type: 'max', message: 'Can\'t offer more than 12 seats'},
-    ],
-
-    'origin': [
-      {type: 'required', message: 'Origin is required'}
-    ],
-
-    'destination': [
-      {type: 'required', message: 'Destination is required'}
-    ],
-
-    'driving' : [
-      {type: 'required', message: 'You must indicate whether you are the driver or not'},
-    ]
-  };
 
   addRide(): void {
     const newRide: Ride = {
@@ -81,13 +52,11 @@ export class AddRideComponent implements OnInit {
       nonSmoking: this.rideNonSmoking
     };
 
-    console.log("first print");
-    console.log(newRide);
 
     if (newRide != null) {
       this.rideListService.addNewRide(newRide).subscribe(
         result => {
-          this.highlightedID = result;
+          this.highlightedID = result ;
 
         },
         err => {
@@ -110,46 +79,10 @@ export class AddRideComponent implements OnInit {
     }
   };
 
-  createForm() {
-
-      this.addRideForm = this.fb.group({
-        driver: new FormControl('driver', Validators.compose([
-          Validators.required,
-          Validators.minLength(2),
-          Validators.pattern('^[A-Za-z0-9\\s]+[A-Za-z0-9\\s]+$(\\.0-9+)?')
-        ])),
-
-        origin: new FormControl('origin', Validators.compose([
-          Validators.required
-        ])),
-
-        destination: new FormControl('destination', Validators.compose([
-          Validators.required
-        ])),
-
-        seatsAvailable: new FormControl('seatsAvailable', Validators.compose([
-          Validators.required,
-          Validators.min(1),
-          Validators.max(12)
-        ])),
-
-        driving: new FormControl('driving', Validators.compose([
-          Validators.required
-        ])),
-
-        departureDate: new FormControl('departureDate'),
-
-        departureTime: new FormControl('departureTime'),
-
-        notes: new FormControl('notes'),
-
-        nonSmoking: null
-      })
-  }
 
 
   refreshRides(): Observable<Ride[]> {
-    // Get Rides returns an Observable, basically a "promise" that
+    // Get Rides returns anhttps://stackoverflow.com/questions/47091872/angular-4-cannot-instantiate-cyclic-dependency-injectiontoken-http-interceptor?rq=1 Observable, basically a "promise" that
     // we will get the data from the server.
     //
     // Subscribe waits until the data is fully downloaded, then
@@ -176,7 +109,7 @@ export class AddRideComponent implements OnInit {
 
 
   ngOnInit() {
-    this.createForm();
+    this.validatorService.createForm();
   }
 
 

@@ -7,6 +7,7 @@ import {Ride} from './ride';
 import {environment} from '../../environments/environment';
 
 @Injectable()
+
 export class RideListService {
   readonly baseUrl: string = environment.API_URL + 'rides';
   private rideUrl: string = this.baseUrl;

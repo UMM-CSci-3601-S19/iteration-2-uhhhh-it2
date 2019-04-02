@@ -30,6 +30,7 @@ public class Server {
     UserRequestHandler userRequestHandler = new UserRequestHandler(userController);
     RideController rideController = new RideController(database);
     RideRequestHandler rideRequestHandler = new RideRequestHandler(rideController);
+//    InputStream stream = Server.class.getResourceAsStream("/public/index.html");
 
     //Configure Spark
     port(serverPort);
@@ -44,6 +45,7 @@ public class Server {
       if (accessControlRequestHeaders != null) {
         response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
       }
+      // InputStream stream = Server.class.getResourceAsStream("/public/index.html");
 
       String accessControlRequestMethod = request.headers("Access-Control-Request-Method");
       if (accessControlRequestMethod != null) {
@@ -59,7 +61,8 @@ public class Server {
     redirect.get("", "/");
 
     Route clientRoute = (req, res) -> {
-      InputStream stream = Server.class.getResourceAsStream("/public/index.html");
+       InputStream stream = Server.class.getResourceAsStream("/public/index.html");
+      System.out.println(stream);
       return IOUtils.toString(stream);
     };
 
