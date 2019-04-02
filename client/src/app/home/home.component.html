@@ -4,10 +4,8 @@
 <div layout-gt-sm="row">
 
   <div flex-gt-sm="80" flex-offset-gt-sm="10">
-    <div *ngIf="!appService.isSignedIn()" class="g-signin2" (click)="signIn()"></div>
 
     <mat-card>
-      <div *ngIf="!appService.isSignedIn()" class="g-signin2" (click)="signIn()"></div>
 
       <mat-card-title id="hello-world">{{ this.text }}</mat-card-title>
       <mat-card-subtitle>this is a</mat-card-subtitle>
@@ -17,13 +15,6 @@
 
         card content
       </mat-card-content>
-
-      <script>
-        $('#signinButton').click(function() {
-          // signInCallback defined in step 6.
-          auth2.grantOfflineAccess().then(signInCallback);
-        });
-      </script>
 
     </mat-card>
   </div>
