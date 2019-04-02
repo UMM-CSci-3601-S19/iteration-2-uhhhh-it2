@@ -1,18 +1,11 @@
 import { Injectable } from '@angular/core';
 import {FormControl, Validators, FormGroup, FormBuilder} from '@angular/forms';
-import {environment} from '../environments/environment';
-
-
 
 @Injectable()
 
 export class ValidatorService {
 
   public rideForm: FormGroup;
-
-// readonly baseUrl: string = environment.API_URL + 'ride_validator';
-//   private rideValidatorUrl: string = this.baseUrl;
-
   constructor(private fb: FormBuilder) { }
 
   ride_validation_messages = {
@@ -78,7 +71,5 @@ export class ValidatorService {
       nonSmoking: null
     });
   }
-
- // validateRide(): Observable<Ride> {}
 
 }
