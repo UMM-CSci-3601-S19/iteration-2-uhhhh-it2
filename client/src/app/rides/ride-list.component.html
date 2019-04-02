@@ -82,6 +82,7 @@
             </div>
             <button mat-raised-button
                     (click)="this.requestRideID(ride._id.$oid)"
+                    (click)="this.retrieveRide()"
                     routerLink="/editride"
                     color="primary"
                     type="button"
