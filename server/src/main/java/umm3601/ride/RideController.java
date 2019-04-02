@@ -44,6 +44,7 @@ public class RideController {
     Iterator<Document> iterator = jsonRides.iterator();
     if (iterator.hasNext()) {
       Document ride = iterator.next();
+      System.out.println("\nRide retrieved in server\n RC" + ride.toJson());
       return ride.toJson();
     } else {
       // We didn't find the desired ride
