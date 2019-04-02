@@ -134,7 +134,7 @@ public class Server {
         try {
           // We can create this later to keep our secret safe
 
-          String CLIENT_SECRET_FILE = "./src/main/java/umm3601/server_files/client_secret_file.json";
+          String CLIENT_SECRET_FILE = "./credentials.json";
 
           GoogleClientSecrets clientSecrets =
             GoogleClientSecrets.load(
@@ -177,7 +177,7 @@ public class Server {
           //System.out.println(name);
           //System.out.println(locale);
 
-        return userController.addNewUser(subjectId, givenName, familyName);
+      //  return userController.addNewUser(subjectId, givenName, familyName);
 
         } catch (Exception e) {
           System.out.println(e);
