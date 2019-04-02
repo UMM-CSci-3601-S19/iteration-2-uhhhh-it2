@@ -67,46 +67,47 @@ export class EditRideComponent implements OnInit {
     ]
   };
 
-  editRide(): void {
-    const editedRide: Ride = {
-      _id: this.rideListComponent.requestedID,
-      driver: this.rideDriver,
-      notes: this.rideNotes,
-      seatsAvailable: this.rideSeats,
-      origin: this.rideOrigin,
-      destination: this.rideDestination,
-      departureDate: this.rideDepartureDate,
-      departureTime: this.rideDepartureTime,
-      isDriving: this.isDriving
-    };
-
-    console.log(editedRide);
-
-    if (editedRide != null) {
-      this.rideListService.editExistingRide(editedRide).subscribe(
-        result => {
-          this.highlightedID = result;
-
-        },
-        err => {
-          // This should probably be turned into some sort of meaningful response.
-          console.log('There was an error editing the ride.');
-          console.log('The editedRide or dialogResult was ' + editedRide);
-          console.log('The error was ' + JSON.stringify(err));
-        });
-
-      this.refreshRides();
-      this.refreshRides();
-      this.refreshRides();
-      this.refreshRides();
-      this.refreshRides();
-      this.refreshRides();
-      this.refreshRides();
-      this.refreshRides();
-      //This is the only solution to a refresh-on-editride
-      // we were having that worked consistently, it's hacky but seems to work well.
-    }
-  };
+  // editRide(): void {
+  //   const editedRide: Ride = {
+  //     _id: this.rideListComponent.requestedID,
+  //     driver: this.rideDriver,
+  //     notes: this.rideListComponent.requestedID,
+  //     seatsAvailable: this.rideSeats,
+  //     origin: this.rideOrigin,
+  //     destination: this.rideDestination,
+  //     departureDate: this.rideDepartureDate,
+  //     departureTime: this.rideDepartureTime,
+  //     isDriving: this.isDriving
+  //   };
+  //
+  //   console.log("Edited ride: " + editedRide);
+  //
+  //   if (editedRide != null) {
+  //     this.rideListService.editExistingRide(editedRide, this.rideListComponent.requestedID).subscribe(
+  //     // this.rideListService.addNewRide(editedRide).subscribe(
+  //       result => {
+  //         this.highlightedID = result;
+  //
+  //       },
+  //       err => {
+  //         // This should probably be turned into some sort of meaningful response.
+  //         console.log('There was an error editing the ride.');
+  //         console.log('The editedRide or dialogResult was ' + editedRide);
+  //         console.log('The error was ' + JSON.stringify(err));
+  //       });
+  //
+  //     this.refreshRides();
+  //     this.refreshRides();
+  //     this.refreshRides();
+  //     this.refreshRides();
+  //     this.refreshRides();
+  //     this.refreshRides();
+  //     this.refreshRides();
+  //     this.refreshRides();
+  //     //This is the only solution to a refresh-on-editride
+  //     // we were having that worked consistently, it's hacky but seems to work well.
+  //   }
+  // };
 
   createForm() {
 
