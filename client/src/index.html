@@ -9,7 +9,7 @@
     function start() {
       gapi.load('auth2', function() {
         auth2 = gapi.auth2.init({
-          client_id: '1936642482862-79h00b2t5r2l7n0ld19vp6hf6887p2db.apps.googleusercontent.com',
+          client_id: '936642482862-79h00b2t5r2l7n0ld19vp6hf6887p2db.apps.googleusercontent.com',
           // Scopes to request in addition to 'profile' and 'email'
           scope: 'additional_scope'
         });
@@ -17,11 +17,31 @@
     }
   </script>
 
+
+
   <script>
     $('#signinButton').click(function() {
       // signInCallback defined in step 6.
       auth2.grantOfflineAccess().then(signInCallback);
+      signIn();
     });
+  </script>
+
+  <script>
+    function onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId());
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+    }
+
+    function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      });
+    }
   </script>
 
   <meta charset="utf-8">
@@ -60,6 +80,7 @@
     } else {
       // There was an error.
     }}
+
 </script>
 
 </body>

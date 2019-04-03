@@ -10,3 +10,5 @@ export class HomeComponent {
     this.text = 'Mongo lab';
   }
 }
+
+

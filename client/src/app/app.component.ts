@@ -5,13 +5,16 @@ import {Router, ActivationStart} from "@angular/router";
 import {Location} from "@angular/common";
 import {HostListener} from "@angular/core";
 import {MatSnackBar} from "@angular/material";
+import {AppService} from "./app.service";
+
 
 declare var gapi: any;
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [AppService]
 })
 
 export class AppComponent implements OnInit {
@@ -23,7 +26,10 @@ export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private _location: Location)
+              private _location: Location,
+  public appService: AppService
+
+)
                {
 
     this.router.events.subscribe((e) => {
@@ -79,6 +85,8 @@ export class AppComponent implements OnInit {
     });
   }
 
+
+
   // This signs the user out
   signOut() {
     this.handleClientLoad();
@@ -88,7 +96,6 @@ export class AppComponent implements OnInit {
     this.googleAuth.then(() => {
       this.googleAuth.signOut();
       localStorage.setItem('isSignedIn', 'false');
-      localStorage.setItem("userID", "");
       window.location.reload();
     })
   }
