@@ -52,15 +52,16 @@ export class RideListService {
       responseType: 'text' as 'json'
     };
 
+    console.log("got here");
     const id = this.http.post<string>(this.rideUrl + '/' + idOfRide, existingRideEdited, httpOptions);
-    console.log("EDIT (POST) ID: ");
+    console.log("EDIT (POST) ID: " + id);
     return id;
   }
 
-  retrieveExistingRide(idOfRide: string): Observable<string> {
+  retrieveExistingRide(idOfRide: string): Observable<Ride> {
 
     // const id = this.http.get<string>(this.rideUrl + '/' + idOfRide, httpOptions);
-    const id = this.http.get<string>(this.rideUrl + '/5c832bec3f173391643a15f1');
+    const id = this.http.get<Ride>(this.rideUrl + '/' + idOfRide);
     console.log("RETRIEVE (GET) ID: " + id);
     return id;
   }

@@ -20,6 +20,7 @@ export class AddRideComponent implements OnInit {
 
   private highlightedID: string;
 
+
   public rideDriver: string;
   public rideNotes: string;
   public rideSeats: number;

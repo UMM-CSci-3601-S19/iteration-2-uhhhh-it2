@@ -32,6 +32,7 @@ export class RideListComponent implements OnInit {
 
   retrieveRide(): void {
     this.rideListService.retrieveExistingRide(this.requestedID);
+    console.log("The GET retrieves all this JSON:" + this.rideListService.retrieveExistingRide(this.requestedID));
   }
 
   requestRideID(oidInput: string): void {

@@ -17,6 +17,12 @@ public class RideRequestHandler {
     this.rideController = rideController;
   }
 
+  public String editExistingRide(Request req, Response res) {
+    res.type("application/json");
+    System.out.println("\nReached editExistingRide\n");
+    return "editExistingRide";
+  }
+
   /**
    * Method called from Server when the 'api/rides/:id' endpoint is received.
    * Get a JSON response with a list of all the rides in the database.
@@ -31,7 +37,6 @@ public class RideRequestHandler {
     String ride;
     try {
       ride = rideController.getRide(id);
-      System.out.println("\nRIDE RETRIEVED IN SERVER\n");
     } catch (IllegalArgumentException e) {
       // This is thrown if the ID doesn't have the appropriate
       // form for a Mongo Object ID.
@@ -42,6 +47,7 @@ public class RideRequestHandler {
       return "";
     }
     if (ride != null) {
+      System.out.println("\nRIDE RETRIEVED IN SERVER\n");
       return ride;
     } else {
       res.status(404);
@@ -72,11 +78,6 @@ public class RideRequestHandler {
    */
   public String getMonth(int month) {
     return new DateFormatSymbols().getMonths()[month-1];
-  }
-
-  public String editExistingRide(Request req, Response res) {
-    System.out.println("\nReached editExistingRide\n");
-    return "editExistingRide";
   }
 
   /**
