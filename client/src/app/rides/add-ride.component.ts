@@ -20,6 +20,7 @@ export class AddRideComponent implements OnInit {
 
   public addRideForm: FormGroup;
 
+
   public rideDriver: string;
   public rideNotes: string;
   public rideSeats: number;
