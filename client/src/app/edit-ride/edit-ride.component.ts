@@ -22,8 +22,21 @@ export class EditRideComponent implements OnInit {
   public rides: Ride[];
 
   public rideID: string = '';
+  public ride: Ride = {
+    _id: '',
+    driver: '',
+    notes: '',
+    seatsAvailable: 0,
+    origin: '',
+    destination: '',
+    departureDate: '',
+    departureTime: '',
+    isDriving: null
+  };
+
 
   private highlightedID: string = '';
+  private returnedRide: string = '';
 
   public addRideForm: FormGroup;
 
@@ -67,47 +80,73 @@ export class EditRideComponent implements OnInit {
     ]
   };
 
-  // editRide(): void {
-  //   const editedRide: Ride = {
-  //     _id: this.rideListComponent.requestedID,
-  //     driver: this.rideDriver,
-  //     notes: this.rideListComponent.requestedID,
-  //     seatsAvailable: this.rideSeats,
-  //     origin: this.rideOrigin,
-  //     destination: this.rideDestination,
-  //     departureDate: this.rideDepartureDate,
-  //     departureTime: this.rideDepartureTime,
-  //     isDriving: this.isDriving
-  //   };
-  //
-  //   console.log("Edited ride: " + editedRide);
-  //
-  //   if (editedRide != null) {
-  //     this.rideListService.editExistingRide(editedRide, this.rideListComponent.requestedID).subscribe(
-  //     // this.rideListService.addNewRide(editedRide).subscribe(
-  //       result => {
-  //         this.highlightedID = result;
-  //
-  //       },
-  //       err => {
-  //         // This should probably be turned into some sort of meaningful response.
-  //         console.log('There was an error editing the ride.');
-  //         console.log('The editedRide or dialogResult was ' + editedRide);
-  //         console.log('The error was ' + JSON.stringify(err));
-  //       });
-  //
-  //     this.refreshRides();
-  //     this.refreshRides();
-  //     this.refreshRides();
-  //     this.refreshRides();
-  //     this.refreshRides();
-  //     this.refreshRides();
-  //     this.refreshRides();
-  //     this.refreshRides();
-  //     //This is the only solution to a refresh-on-editride
-  //     // we were having that worked consistently, it's hacky but seems to work well.
-  //   }
-  // };
+  editRide(): void {
+    const editedRide: Ride = {
+      _id: this.rideListComponent.requestedID,
+      driver: this.rideDriver,
+      notes: this.rideListComponent.requestedID,
+      seatsAvailable: this.rideSeats,
+      origin: this.rideOrigin,
+      destination: this.rideDestination,
+      departureDate: this.rideDepartureDate,
+      departureTime: this.rideDepartureTime,
+      isDriving: this.isDriving
+    };
+
+    console.log("Edited ride: " + editedRide);
+
+    if (editedRide != null) {
+      this.rideListService.editExistingRide(editedRide, this.rideListComponent.requestedID).subscribe(
+      // this.rideListService.addNewRide(editedRide).subscribe(
+        result => {
+          this.highlightedID = result;
+
+        },
+        err => {
+          // This should probably be turned into some sort of meaningful response.
+          console.log('There was an error editing the ride.');
+          console.log('The editedRide or dialogResult was ' + editedRide);
+          console.log('The error was ' + JSON.stringify(err));
+        });
+
+      this.refreshRides();
+      this.refreshRides();
+      this.refreshRides();
+      this.refreshRides();
+      this.refreshRides();
+      this.refreshRides();
+      this.refreshRides();
+      this.refreshRides();
+      //This is the only solution to a refresh-on-editride
+      // we were having that worked consistently, it's hacky but seems to work well.
+    }
+  };
+
+  showExistingRide() {
+    this.rideListService.retrieveExistingRide("5c832bec26656a20be5ec19a").subscribe(
+      // result => {
+      // this.returnedRide = result;
+      // console.log("the result" + result);
+      // },
+      // err => {
+      //   // This should probably be turned into some sort of meaningful response.
+      //   console.log('There was an error retrieving the ride.');
+      //   // console.log('The editedRide or dialogResult was ' + editedRide);
+      //   console.log('The error was ' + JSON.stringify(err));
+      // });
+      // (data: String) => console.log(data))
+      (data: Ride) => {
+        console.log(data);
+        this.ride.driver = data.driver;
+        this.ride._id = data._id['$oid'];
+
+      });
+
+
+
+    console.log(this.ride);
+
+  };
 
   createForm() {
 
@@ -170,6 +209,7 @@ export class EditRideComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("EXISTING RIDE:" + this.showExistingRide());
     this.createForm();
   }
 
