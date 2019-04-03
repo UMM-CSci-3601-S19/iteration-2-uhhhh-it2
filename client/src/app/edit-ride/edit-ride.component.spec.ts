@@ -2,6 +2,11 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditRideComponent } from './edit-ride.component';
 
+import {CustomModule} from '../custom.module';
+import {By} from "@angular/platform-browser";
+import {NgForm} from "@angular/forms";
+
+
 describe('EditRideComponent', () => {
   let component: EditRideComponent;
   let fixture: ComponentFixture<EditRideComponent>;
