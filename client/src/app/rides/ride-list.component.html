@@ -81,10 +81,21 @@
           <mat-card-title>
             <div class="departure-time">
               <mat-icon style="color: blue"> transfer_within_a_station </mat-icon>
+              <span *ngIf="ride._id.$oid">{{ride._id.$oid}}</span>
               <span *ngIf="ride.departureDate">{{ride.departureDate}}</span>
               <span *ngIf="ride.departureDate && ride.departureTime"> at </span>
               <span *ngIf="ride.departureTime">{{ride.departureTime}}</span>
             </div>
+            <button mat-raised-button
+                    (click)="this.requestRideID(ride._id.$oid)"
+                    (click)="this.retrieveRide()"
+                    routerLink="/editride"
+                    color="primary"
+                    type="button"
+                    style="width: 50%">
+              <mat-icon>add_circle_outline</mat-icon>
+              Create a Ride
+            </button>
           </mat-card-title>
         </mat-card-header>
 

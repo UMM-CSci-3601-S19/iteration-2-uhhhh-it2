@@ -21,11 +21,25 @@ export class RideListComponent implements OnInit {
   public rideDriving: boolean;
   public rideNonSmoking: boolean = false; // this defaults the box to be unchecked
 
+  // The ID of a ride when edit ride is clicked
+  public requestedID: string;
+
+
   // Inject the RideListService into this component.
   constructor(public rideListService: RideListService) {
  //   rideListService.addListener(this);
   }
 
+  retrieveRide(): void {
+    this.rideListService.retrieveExistingRide(this.requestedID);
+  }
+
+  requestRideID(oidInput: string): void {
+    // this.rideID = oidInput;
+    // console.log(this.rideID);
+    this.requestedID = oidInput;
+    console.log("Requested ID: " + this.requestedID);
+  }
   // This method is used in the HTML instead of ngModel, since it solves a problem where
   // clicking on the checkbox didn't always 'uncheck' the box. Implementing this method with
   // (click)=toggleNonSmoking, and checked="rideNonSmoking", fixes that bothersome problem.
@@ -84,6 +98,8 @@ export class RideListComponent implements OnInit {
     //
     // Subscribe waits until the data is fully downloaded, then
     // performs an action on it (the first lambda)
+
+    console.log("It got called");
 
     const rides: Observable<Ride[]> = this.rideListService.getRides();
     rides.subscribe(

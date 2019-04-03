@@ -31,6 +31,7 @@ public class RideRequestHandler {
     String ride;
     try {
       ride = rideController.getRide(id);
+      System.out.println("\nRIDE RETRIEVED IN SERVER\n");
     } catch (IllegalArgumentException e) {
       // This is thrown if the ID doesn't have the appropriate
       // form for a Mongo Object ID.
@@ -71,6 +72,11 @@ public class RideRequestHandler {
    */
   public String getMonth(int month) {
     return new DateFormatSymbols().getMonths()[month-1];
+  }
+
+  public String editExistingRide(Request req, Response res) {
+    System.out.println("\nReached editExistingRide\n");
+    return "editExistingRide";
   }
 
   /**

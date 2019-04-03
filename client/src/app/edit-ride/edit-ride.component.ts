@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Ride} from '../rides/ride';
-
-//validator.service should do the job that add-ride is currently doing
-import {ValidatorService} from 'app/validator.service';
-
+import {ValidatorService} from '../validator.service';
 import {Observable} from "rxjs/Observable";
 import {RideListComponent} from "../rides/ride-list.component";
 import {RideListService} from "../rides/ride-list.service";
@@ -16,12 +13,31 @@ import {RideListService} from "../rides/ride-list.service";
   providers: [ RideListComponent ],
 })
 
-
 export class EditRideComponent implements OnInit {
 
-  constructor() { }
+  public rides: Ride[];
+
+  public rideID: string = '';
+
+  private highlightedID: string = '';
+
+
+  public rideDriver: string;
+  public rideNotes: string;
+  public rideSeats: number;
+  public rideOrigin: string;
+  public rideDestination: string;
+  public rideDepartureDate: string;
+  public rideDepartureTime: string;
+  public rideNonSmoking: false;
+
+  // Please keep this as the default value, or you will have problems with form validation / seats available as a rider.
+  public rideDriving: true;
+  constructor(public rideListService: RideListService, public validatorService: ValidatorService ) { }
+
 
   ngOnInit() {
+    this.validatorService.createForm();
   }
 
 }
