@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RideListService} from './ride-list.service';
 import {Ride} from './ride';
 import {Observable} from 'rxjs/Observable';
+import {AppService} from "../app.service";
 
 @Component({
   selector: 'ride-list-component',
@@ -21,7 +22,7 @@ export class RideListComponent implements OnInit {
   public rideDriving: string;
 
   // Inject the RideListService into this component.
-  constructor(public rideListService: RideListService) {
+  constructor(public rideListService: RideListService, public appService : AppService) {
  //   rideListService.addListener(this);
   }
 

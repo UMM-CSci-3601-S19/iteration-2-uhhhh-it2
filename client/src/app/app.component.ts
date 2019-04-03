@@ -126,16 +126,17 @@ export class AppComponent implements OnInit {
       });
   }
 
-  handleClientLoad() {
-    gapi.load('client:auth2', this.initClient);
-  }
-
   initClient() {
     gapi.client.init({
       'clientId': '1080043572259-h76ostj5u9b5e9f6u2j695uin7pd5br5.apps.googleusercontent.com',
       'scope': 'profile email'
     });
   }
+
+  handleClientLoad() {
+    gapi.load('client:auth2', this.initClient);
+  }
+
 
   ngOnInit() {
     this.handleClientLoad();

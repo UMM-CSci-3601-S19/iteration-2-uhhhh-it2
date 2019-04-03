@@ -13,8 +13,37 @@
           // Scopes to request in addition to 'profile' and 'email'
           scope: 'additional_scope'
         });
+        auth2.isSignedIn.listen(signinChanged);
+        auth2.currentUser.listen(userChanged);
+        localStorage.setItem("isSignedIn", "false");
+
       });
+      var signinChanged = function (val) {
+        localStorage.setItem("isSignedIn", "false");
+      };
+      var onSuccess = function(user) {
+        console.log('Signed in as ' + user.getBasicProfile().getName());
+        // Redirect somewhere
+      };
+      var onFailure = function(error) {
+        console.log(error);
+      };
+      var userChanged = function (user) {
+        localStorage.setItem("isSignedIn", "false");
+      }
+
     }
+  </script>
+
+  <script>
+    function checkIfSignedIn() {
+      if(localStorage.getItem('isSignedIn')=="true"){
+        return true;
+      }
+      else{
+        return false;
+      }
+   }
   </script>
 
 
@@ -23,7 +52,6 @@
     $('#signinButton').click(function() {
       // signInCallback defined in step 6.
       auth2.grantOfflineAccess().then(signInCallback);
-      signIn();
     });
   </script>
 
@@ -34,15 +62,23 @@
       console.log('Name: ' + profile.getName());
       console.log('Image URL: ' + profile.getImageUrl());
       console.log('Email: ' + profile.getEmail());
+      console.log('User signed in.')
+      localStorage.setItem("isSignedIn", "true");
     }
+  </script>
 
+
+
+  <script>
     function signOut() {
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(function () {
         console.log('User signed out.');
+        localStorage.setItem("isSignedIn", false);
       });
     }
   </script>
+
 
   <meta charset="utf-8">
   <base href="/">

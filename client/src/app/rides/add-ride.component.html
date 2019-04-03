@@ -1,5 +1,5 @@
 <title>MoRide - Add Rides</title>
-<div layout-gt-sm="row">
+<div *ngIf="appService.isSignedIn()" layout-gt-sm="row">
   <div flex-gt-sm="40" flex-offset-gt-sm="30">
     <form [formGroup]="addRideForm">
       <mat-card class="addARide">

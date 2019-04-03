@@ -9,14 +9,31 @@
 
     <mat-card>
 
-      <mat-card-title id="hello-world">{{ this.text }}</mat-card-title>
-      <mat-card-subtitle>this is a</mat-card-subtitle>
-      <mat-divider></mat-divider>
+      <mat-card-title>Login in the top left.</mat-card-title>
       <mat-card-content>
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        card content
-        <button onclick="localStorage.setItem('test1','fwafwaf')"> stuff </button>
+        After you've logged in, select an action.
+        <br>
+        <br>
 
+        <button mat-raised-button
+                routerLink="/rides"
+                color="primary"
+                type="button"
+                >
+          <mat-icon>directions_car</mat-icon>
+          <div>
+            View Rides
+  </div>
+        </button>
+        <button mat-raised-button
+                routerLink="/addride"
+                type="button"
+        >
+          <mat-icon>add_circle_outline</mat-icon>
+          <div>
+            Add Rides
+          </div>
+        </button>
       </mat-card-content>
 
     </mat-card>

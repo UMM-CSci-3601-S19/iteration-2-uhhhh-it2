@@ -4,6 +4,7 @@ import {FormControl, Validators, FormGroup, FormBuilder} from "@angular/forms";
 import {RideListComponent} from "./ride-list.component";
 import {RideListService} from "./ride-list.service";
 import {Observable} from "rxjs/Observable";
+import {AppService} from "../app.service";
 
 @Component({
   selector: 'add-ride.component',
@@ -33,7 +34,7 @@ export class AddRideComponent implements OnInit {
 
 
   // Inject the RideListService into this component.
-  constructor(public rideListService: RideListService, private fb: FormBuilder) {
+  constructor(public rideListService: RideListService, private fb: FormBuilder, public appService : AppService) {
 
   }
 
