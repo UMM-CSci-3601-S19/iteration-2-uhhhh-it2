@@ -28,7 +28,7 @@ export class EditRideComponent implements OnInit {
     departureDate: '',
     departureTime: '',
     isDriving: null,
-    NonSmoking: null
+    nonSmoking: null
   };
 
 
@@ -47,23 +47,22 @@ export class EditRideComponent implements OnInit {
 
   // Please keep this as the default value, or you will have problems with form validation / seats available as a rider.
   public isDriving: true;
-  constructor(public rideListService: RideListService, public validatorService: ValidatorService ) { }
-
-  constructor(public rideListService: RideListService, private fb: FormBuilder, public rideListComponent: RideListComponent) { }
-
+  constructor(public rideListService: RideListService,
+              public validatorService: ValidatorService,
+              public rideListComponent: RideListComponent) { }
 
   editRide(): void {
     const editedRide: Ride = {
-      _id: this.rideListComponent.requestedID,
+      _id: this.ride._id,
       driver: this.rideDriver,
-      notes: this.rideListComponent.requestedID,
+      notes: this.rideNotes,
       seatsAvailable: this.rideSeats,
       origin: this.rideOrigin,
       destination: this.rideDestination,
       departureDate: this.rideDepartureDate,
       departureTime: this.rideDepartureTime,
       isDriving: this.isDriving,
-      rideNonSmoking: this.rideNonSmoking,
+      nonSmoking: this.rideNonSmoking,
     };
 
     console.log("Edited ride: " + editedRide);
@@ -110,14 +109,19 @@ export class EditRideComponent implements OnInit {
       // (data: String) => console.log(data))
       (data: Ride) => {
         console.log(data);
-        this.ride.driver = data.driver;
         this.ride._id = data._id['$oid'];
-
+        this.ride.driver = data.driver;
+        this.ride.notes = data.notes;
+        this.ride.seatsAvailable = data.seatsAvailable;
+        this.ride.origin = data.origin;
+        this.ride.destination = data.destination;
+        this.ride.departureDate = data.departureDate;
+        this.ride.departureTime = data.departureTime;
+        this.ride.isDriving = data.isDriving;
+        this.ride.nonSmoking = data.nonSmoking;
       });
 
-
-
-    console.log(this.ride);
+    console.log("Ride reconstructed from GET" + this.ride);
 
   };
 
