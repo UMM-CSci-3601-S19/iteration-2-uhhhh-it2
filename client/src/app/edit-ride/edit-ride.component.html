@@ -7,7 +7,7 @@
 because of this, add ride validators and form types remain-->
 <div layout-gt-sm="row">
   <div flex-gt-sm="40" flex-offset-gt-sm="30">
-    <form [formGroup]="addRideForm">
+    <form [formGroup]="validatorService.rideForm">
       <mat-card class="editARide">
 
         <mat-card-title id="ride-edit-title" class="rideEditTitle">Edit a Ride</mat-card-title>
@@ -21,9 +21,9 @@ because of this, add ride validators and form types remain-->
             <mat-radio-button id="isDrivingFORM" [value] = "true" > driving</mat-radio-button>
             <mat-radio-button id="isNotDrivingFORM" [value] = "false" (click)="setRideSeats()">
               looking for a ride</mat-radio-button>
-            <mat-error *ngFor="let validation of edit_ride_validation_messages.driving">
+            <mat-error *ngFor="let validation of this.validatorService.ride_validation_messages.driving">
               <mat-error class="error-message" id="driving-error"
-                         *ngIf="addRideForm.get('driving').hasError(validation.type)">
+                         *ngIf="validatorService.rideForm.get('driving').hasError(validation.type)">
                 {{validation.message}}
               </mat-error>
             </mat-error>
@@ -34,10 +34,10 @@ because of this, add ride validators and form types remain-->
           <mat-form-field>
             <input name="driverField" matInput #input id="driverID" placeholder="Name"
                    required [(ngModel)]="rideDriver" formControlName="driver">
-            <mat-error *ngFor="let validation of edit_ride_validation_messages.driver">
+            <mat-error *ngFor="let validation of this.validatorService.ride_validation_messages.driver">
               <mat-error class="error-message"
-                         *ngIf="addRideForm.get('driver').hasError(validation.type) &&
-                       (addRideForm.get('driver').dirty || addRideForm.get('driver').touched)">
+                         *ngIf="validatorService.rideForm.get('driver').hasError(validation.type) &&
+                       (validatorService.rideForm.get('driver').dirty || validatorService.rideForm.get('driver').touched)">
                 {{validation.message}}
               </mat-error>
             </mat-error>
@@ -48,10 +48,10 @@ because of this, add ride validators and form types remain-->
                    placeholder="Seats Available"
                    [(ngModel)]="rideSeats" formControlName="seatsAvailable">
             <mat-error *ngIf="isDriving">
-              <mat-error *ngFor="let validation of edit_ride_validation_messages.seatsAvailable">
+              <mat-error *ngFor="let validation of this.validatorService.ride_validation_messages.seatsAvailable">
                 <mat-error class="error-message"
-                           *ngIf="addRideForm.get('seatsAvailable').hasError(validation.type) &&
-                           (addRideForm.get('seatsAvailable').dirty || addRideForm.get('seatsAvailable').touched)">
+                           *ngIf="validatorService.rideForm.get('seatsAvailable').hasError(validation.type) &&
+                           (validatorService.rideForm.get('seatsAvailable').dirty || validatorService.rideForm.get('seatsAvailable').touched)">
                   {{validation.message}}
                 </mat-error>
               </mat-error>
@@ -64,10 +64,10 @@ because of this, add ride validators and form types remain-->
           <mat-form-field>
             <input class="inputRideInfo" matInput #input id="originField" placeholder="Origin"
                    required [(ngModel)]="rideOrigin" formControlName="origin">
-            <mat-error *ngFor="let validation of edit_ride_validation_messages.origin">
+            <mat-error *ngFor="let validation of this.validatorService.ride_validation_messages.origin">
               <mat-error class="error-message"
-                         *ngIf="addRideForm.get('origin').hasError(validation.type) &&
-                       (addRideForm.get('origin').dirty || addRideForm.get('origin').touched)">
+                         *ngIf="validatorService.rideForm.get('origin').hasError(validation.type) &&
+                       (validatorService.rideForm.get('origin').dirty || validatorService.rideForm.get('origin').touched)">
                 {{validation.message}}
               </mat-error>
             </mat-error>
@@ -76,10 +76,10 @@ because of this, add ride validators and form types remain-->
           <mat-form-field>
             <input class="inputRideInfo" matInput #input id="destinationField" placeholder="Destination"
                    required [(ngModel)]="rideDestination" formControlName="destination">
-            <mat-error *ngFor="let validation of edit_ride_validation_messages.destination">
+            <mat-error *ngFor="let validation of this.validatorService.ride_validation_messages.destination">
               <mat-error class="error-message"
-                         *ngIf="addRideForm.get('destination').hasError(validation.type) &&
-                       (addRideForm.get('destination').dirty || addRideForm.get('destination').touched)">
+                         *ngIf="validatorService.rideForm.get('destination').hasError(validation.type) &&
+                       (validatorService.rideForm.get('destination').dirty || validatorService.rideForm.get('destination').touched)">
                 {{validation.message}}
               </mat-error>
             </mat-error>
@@ -110,7 +110,7 @@ because of this, add ride validators and form types remain-->
 
         <mat-card-actions layout="row">
           <button class="editRideButton" mat-raised-button id="confirmEditRideButton"  type="button" color="primary"
-                  (click)="editRide()" routerLink="/rides" [disabled]="!addRideForm.valid">Edit Ride
+                  (click)="editRide()" routerLink="/rides" [disabled]="!validatorService.rideForm.valid">Edit Ride
           </button>
           <button class="cancelRideButton" mat-button id="exitWithoutEditingButton" routerLink="/rides"  type="button">Cancel</button>
         </mat-card-actions>
