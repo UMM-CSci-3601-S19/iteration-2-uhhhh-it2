@@ -28,6 +28,22 @@ describe('Ride list', () => {
 
   beforeEach(() => {
     page = new RidePage();
+    browser.executeScript("window.localStorage.setItem('isSignedIn','true')");
+    browser.executeScript("window.localStorage.setItem('userID', 'defaultUserID')");
+    browser.executeScript("window.localStorage.setItem('userFirstName', 'Patrick')");
+    browser.executeScript("window.localStorage.setItem('userLastName', 'Bateman')");
+
+    // element(by.className("abcRioButtonContentWrapper")).click();
+    // browser.driver.sleep(1500);
+    // browser.switchTo().window(handles[1])
+    // page.field('whsOnd zHQkBf').sendKeys('morideE2Etesting@gmail.com\n');
+    // browser.driver.sleep(1500);
+    // page.click('rideslistbutton')
+
+
+   // morideE2Etesting@gmail.com
+   // MorideP5ssword
+
   });
 
   it('should get and highlight Rides title attribute ', () => {
