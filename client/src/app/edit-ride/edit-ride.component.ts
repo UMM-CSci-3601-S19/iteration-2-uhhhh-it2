@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Ride} from '../rides/ride';
 import {ValidatorService} from '../validator.service';
 import {Observable} from "rxjs/Observable";
@@ -16,6 +16,7 @@ import {RideListService} from "../rides/ride-list.service";
 export class EditRideComponent implements OnInit {
 
   public rides: Ride[];
+  public reqID = this.rideListComponent.requestedID;
 
   public rideID: string = '';
   public ride: Ride = {
@@ -31,10 +32,8 @@ export class EditRideComponent implements OnInit {
     nonSmoking: null
   };
 
-
   private highlightedID: string = '';
   private returnedRide: string = '';
-
 
   public rideDriver: string;
   public rideNotes: string;
@@ -68,7 +67,7 @@ export class EditRideComponent implements OnInit {
     console.log("Edited ride: " + editedRide);
 
     if (editedRide != null) {
-      this.rideListService.editExistingRide(editedRide, this.rideListComponent.requestedID).subscribe(
+      this.rideListService.editExistingRide(editedRide, "5c832bec3f173391643a15f1").subscribe(
       // this.rideListService.addNewRide(editedRide).subscribe(
         result => {
           this.highlightedID = result;
@@ -95,7 +94,8 @@ export class EditRideComponent implements OnInit {
   };
 
   showExistingRide() {
-    this.rideListService.retrieveExistingRide("5c832bec26656a20be5ec19a").subscribe(
+    console.log("THIS SHOULD BE THE RIDE ID: " + this.reqID);
+    this.rideListService.retrieveExistingRide("5c832bec3f173391643a15f1").subscribe(
       // result => {
       // this.returnedRide = result;
       // console.log("the result" + result);
