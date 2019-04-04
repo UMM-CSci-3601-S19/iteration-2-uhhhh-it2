@@ -16,9 +16,7 @@ import {RideListService} from "../rides/ride-list.service";
 export class EditRideComponent implements OnInit {
 
   public rides: Ride[];
-  public reqID = this.rideListComponent.requestedID;
 
-  public rideID: string = '';
   public ride: Ride = {
     _id: '',
     driver: '',
@@ -47,8 +45,13 @@ export class EditRideComponent implements OnInit {
   // Please keep this as the default value, or you will have problems with form validation / seats available as a rider.
   public isDriving: true;
   constructor(public rideListService: RideListService,
-              public validatorService: ValidatorService,
-              public rideListComponent: RideListComponent) { }
+              public validatorService: ValidatorService) { }
+
+  retrieveRide(ride: Ride): void {
+    this.ride = ride;
+    console.log("The requested Ride: " + this.ride);
+    // console.log("The GET retrieves all this JSON:" + this.rideListService.retrieveExistingRide(this.requestedID));
+  }
 
   editRide(): void {
     const editedRide: Ride = {
@@ -67,8 +70,7 @@ export class EditRideComponent implements OnInit {
     console.log("Edited ride: " + editedRide);
 
     if (editedRide != null) {
-      this.rideListService.editExistingRide(editedRide, "5c832bec3f173391643a15f1").subscribe(
-      // this.rideListService.addNewRide(editedRide).subscribe(
+      this.rideListService.editExistingRide(editedRide).subscribe(
         result => {
           this.highlightedID = result;
 
@@ -92,39 +94,6 @@ export class EditRideComponent implements OnInit {
       // we were having that worked consistently, it's hacky but seems to work well.
     }
   };
-
-  showExistingRide() {
-    console.log("THIS SHOULD BE THE RIDE ID: " + this.reqID);
-    this.rideListService.retrieveExistingRide("5c832bec3f173391643a15f1").subscribe(
-      // result => {
-      // this.returnedRide = result;
-      // console.log("the result" + result);
-      // },
-      // err => {
-      //   // This should probably be turned into some sort of meaningful response.
-      //   console.log('There was an error retrieving the ride.');
-      //   // console.log('The editedRide or dialogResult was ' + editedRide);
-      //   console.log('The error was ' + JSON.stringify(err));
-      // });
-      // (data: String) => console.log(data))
-      (data: Ride) => {
-        console.log(data);
-        this.ride._id = data._id['$oid'];
-        this.ride.driver = data.driver;
-        this.ride.notes = data.notes;
-        this.ride.seatsAvailable = data.seatsAvailable;
-        this.ride.origin = data.origin;
-        this.ride.destination = data.destination;
-        this.ride.departureDate = data.departureDate;
-        this.ride.departureTime = data.departureTime;
-        this.ride.isDriving = data.isDriving;
-        this.ride.nonSmoking = data.nonSmoking;
-      });
-
-    console.log("Ride reconstructed from GET" + this.ride);
-
-  };
-
 
   refreshRides(): Observable<Ride[]> {
     // Get Rides returns an Observable, basically a "promise" that
@@ -152,7 +121,6 @@ export class EditRideComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("EXISTING RIDE:" + this.showExistingRide());
     this.validatorService.createForm();
   }
 

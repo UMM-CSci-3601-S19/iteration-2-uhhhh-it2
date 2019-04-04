@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {RideListService} from './ride-list.service';
 import {Ride} from './ride';
 import {Observable} from 'rxjs/Observable';
-
+import {EditRideComponent} from '../edit-ride/edit-ride.component';
 @Component({
   selector: 'ride-list-component',
   templateUrl: 'ride-list.component.html',
@@ -21,26 +21,22 @@ export class RideListComponent implements OnInit {
   public rideDriving: boolean;
   public rideNonSmoking: boolean = false; // this defaults the box to be unchecked
 
-  // The ID of a ride when edit ride is clicked
-  public requestedID: string;
+ //public editRideComponent: EditRideComponent;
 
+  // The ID of a ride when edit ride is clicked
+  public singleRide: Ride;
   // Inject the RideListService into this component.
   constructor(public rideListService: RideListService) {
  //   rideListService.addListener(this);
   }
 
-  retrieveRide(oidInput: string): void {
-    this.requestedID = oidInput;
-    console.log("The requested ID: " + this.requestedID);
-    this.rideListService.retrieveExistingRide(this.requestedID);
-    // console.log("The GET retrieves all this JSON:" + this.rideListService.retrieveExistingRide(this.requestedID));
-  }
+
 
   // This method is used in the HTML instead of ngModel, since it solves a problem where
   // clicking on the checkbox didn't always 'uncheck' the box. Implementing this method with
   // (click)=toggleNonSmoking, and checked="rideNonSmoking", fixes that bothersome problem.
   private toggleNonSmoking() {
-    this.rideNonSmoking = !this.rideNonSmoking
+    this.rideNonSmoking = !this.rideNonSmoking;
   }
 
   public filterRides(searchDestination: string, searchOrigin: string,

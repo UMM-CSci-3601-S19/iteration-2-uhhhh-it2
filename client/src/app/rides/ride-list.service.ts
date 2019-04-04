@@ -36,7 +36,7 @@ export class RideListService {
     return id;
   }
 
-  editExistingRide(existingRideEdited: Ride, idOfRide: string): Observable<string> {
+  editExistingRide(existingRideEdited: Ride): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         // We're sending JSON
@@ -48,8 +48,8 @@ export class RideListService {
       responseType: 'text' as 'json'
     };
 
-    const id = this.http.post<string>(this.rideUrl + '/edit/' + idOfRide, existingRideEdited, httpOptions);
-    console.log(this.rideUrl + '/edit/' + idOfRide);
+    const id = this.http.post<string>(this.rideUrl + '/edit/', existingRideEdited, httpOptions);
+    console.log(this.rideUrl + '/edit');
     return id;
   }
 
