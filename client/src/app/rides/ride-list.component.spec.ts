@@ -5,6 +5,8 @@ import {RideListService} from './ride-list.service';
 import {Observable} from 'rxjs/Observable';
 import {FormsModule} from '@angular/forms';
 import {CustomModule} from '../custom.module';
+import {AppService} from "../app.service";
+
 
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/do';
@@ -64,7 +66,7 @@ describe('Ride list', () => {
     TestBed.configureTestingModule({
       imports: [CustomModule],
       declarations: [RideListComponent],
-      providers: [{provide: RideListService, useValue: rideListServiceStub}]
+      providers: [{provide: RideListService, useValue: rideListServiceStub}, AppService]
     });
   });
 
@@ -276,7 +278,7 @@ describe('Misbehaving Ride List', () => {
     TestBed.configureTestingModule({
       imports: [FormsModule, CustomModule],
       declarations: [RideListComponent],
-      providers: [{provide: RideListService, useValue: rideListServiceStub}]
+      providers: [{provide: RideListService, useValue: rideListServiceStub}, AppService]
     });
   });
 
