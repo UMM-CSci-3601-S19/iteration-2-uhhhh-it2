@@ -28,12 +28,12 @@ export class EditRideComponent implements OnInit {
     departureDate: '',
     departureTime: '',
     isDriving: null,
-    NonSmoking: null
+    nonSmoking: null
   };
 
 
   private highlightedID: string = '';
-  private returnedRide: string = '';
+  private returnedRide: string = 'ride';
 
 
   public rideDriver: string;
@@ -47,10 +47,7 @@ export class EditRideComponent implements OnInit {
 
   // Please keep this as the default value, or you will have problems with form validation / seats available as a rider.
   public isDriving: true;
-  constructor(public rideListService: RideListService, public validatorService: ValidatorService ) { }
-
-  constructor(public rideListService: RideListService, private fb: FormBuilder, public rideListComponent: RideListComponent) { }
-
+  constructor(public rideListService: RideListService, public validatorService: ValidatorService, public rideListComponent: RideListComponent) { }
 
   editRide(): void {
     const editedRide: Ride = {
@@ -63,10 +60,10 @@ export class EditRideComponent implements OnInit {
       departureDate: this.rideDepartureDate,
       departureTime: this.rideDepartureTime,
       isDriving: this.isDriving,
-      rideNonSmoking: this.rideNonSmoking,
+      nonSmoking: this.rideNonSmoking,
     };
 
-    console.log("Edited ride: " + editedRide);
+    console.log('Edited ride: ' + editedRide);
 
     if (editedRide != null) {
       this.rideListService.editExistingRide(editedRide, this.rideListComponent.requestedID).subscribe(

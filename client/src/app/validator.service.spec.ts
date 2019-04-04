@@ -16,10 +16,14 @@ describe('ValidatorService', () => {
     //expect(service.getValue()).toBe('real value');
   });
 
-  it('should not allow a name to contain a symbol', () => {
+  it('should create form', () => {
     const service: ValidatorService = TestBed.get(ValidatorService);
     expect(service.createForm()).toBeTruthy();
-    //expect(service.getValue()).toBe('real value');
+  });
+
+  it('should create form', () => {
+    const service: ValidatorService = TestBed.get(ValidatorService);
+    expect(service.createForm()).toBeTruthy();
   });
 
 });

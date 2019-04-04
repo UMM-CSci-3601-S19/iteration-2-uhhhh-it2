@@ -8,5 +8,5 @@ export interface Ride {
   departureDate: string;
   departureTime: string;
   isDriving: boolean;
-  nonSmoking: boolean
+  nonSmoking: boolean;
 }
