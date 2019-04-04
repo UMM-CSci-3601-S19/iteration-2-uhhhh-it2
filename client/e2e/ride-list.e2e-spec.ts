@@ -28,6 +28,10 @@ describe('Organize rides by soonest to latest', () => {
 
   beforeEach(() => {
     page = new RidePage();
+    browser.executeScript("window.localStorage.setItem('isSignedIn','true')")
+    browser.executeScript("window.localStorage.setItem('userID', 'defaultUserID')");
+    browser.executeScript("window.localStorage.setItem('userFirstName','Patrick')");
+    browser.executeScript("window.localStorage.setItem('userLastName', 'Bateman')");
   });
 
   // The ride list SHOULD be organized with rides CLOSER TO OUR TIME at the top, and rides FURTHER FROM OUR TIME
