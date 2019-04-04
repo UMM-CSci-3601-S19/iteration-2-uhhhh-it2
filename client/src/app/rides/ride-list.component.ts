@@ -31,6 +31,8 @@ export class RideListComponent implements OnInit {
   retrieveRide(ride: Ride): void {
     this.singleRide = ride;
     console.log("The requested Ride: " + this.singleRide);
+    //return this.singleRide;
+
   }
 
   // This method is used in the HTML instead of ngModel, since it solves a problem where

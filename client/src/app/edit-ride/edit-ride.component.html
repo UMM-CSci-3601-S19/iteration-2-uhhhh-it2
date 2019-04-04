@@ -28,7 +28,9 @@ because of this, add ride validators and form types remain-->
           <br>
 
           <mat-form-field>
-            <input name="driverField" matInput #input id="driverID" placeholder="Name"
+
+            <!--ride.driver works, might not need rideDriver-->
+            <input name="driverField" value="{{ride.driver}}" matInput #input id="driverID" placeholder="Name"
                    required [(ngModel)]="rideDriver" formControlName="driver">
             <mat-error *ngFor="let validation of this.validatorService.ride_validation_messages.driver">
               <mat-error class="error-message"
@@ -40,7 +42,7 @@ because of this, add ride validators and form types remain-->
           </mat-form-field>
 
           <mat-form-field *ngIf="isDriving">
-            <input type="number" class="inputRideInfo" matInput #input id="seatsAvailableField"
+            <input type="number" class="inputRideInfo" value="{{ride.isDriving}}"matInput #input id="seatsAvailableField"
                    placeholder="Seats Available"
                    [(ngModel)]="rideSeats" formControlName="seatsAvailable">
             <mat-error *ngIf="isDriving">
@@ -109,6 +111,8 @@ because of this, add ride validators and form types remain-->
 
           <mat-checkbox [(ngModel)]="rideNonSmoking" id="tryThis" class="checkboxNonSmoking"
                         formControlName="nonSmoking"> Non-smoking </mat-checkbox>
+
+
 
         </mat-card-content>
 

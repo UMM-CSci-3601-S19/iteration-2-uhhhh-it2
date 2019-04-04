@@ -17,19 +17,20 @@ export class EditRideComponent implements OnInit {
 
   public rides: Ride[];
 
-  public ride: Ride = this.rideListComponent.singleRide;
-  //   {
-  //   _id: '',
-  //   driver: '',
-  //   notes: '',
-  //   seatsAvailable: 0,
-  //   origin: '',
-  //   destination: '',
-  //   departureDate: '',
-  //   departureTime: '',
-  //   isDriving: null,
-  //   nonSmoking: null
-  // };
+
+  public ride: Ride = //this.rideListComponent.singleRide;
+    {
+    _id: '',
+    driver: '',
+    notes: '',
+    seatsAvailable: 0,
+    origin: '',
+    destination: '',
+    departureDate: '',
+    departureTime: '',
+    isDriving: null,
+    nonSmoking: null
+  };
 
 
 
@@ -51,11 +52,14 @@ export class EditRideComponent implements OnInit {
               public validatorService: ValidatorService,
               public rideListComponent: RideListComponent) { }
 
-  // retrieveRide(ride: Ride): void {
-  //   this.ride = ride;
-  //   console.log("The requested Ride: " + this.ride);
-  //   // console.log("The GET retrieves all this JSON:" + this.rideListService.retrieveExistingRide(this.requestedID));
-  // }
+  // rideDriver= this.ride.driver;
+
+  fillFields(): void {
+    if(this.rideListComponent.singleRide !=null) {
+      this.ride = this.rideListComponent.singleRide;
+    }
+  };
+
 
   editRide(): void {
     const editedRide: Ride = this.ride;
@@ -126,6 +130,9 @@ export class EditRideComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.ride);
+    console.log(this.rideListComponent.singleRide);
+    this.fillFields();
     this.validatorService.createForm();
   }
 
