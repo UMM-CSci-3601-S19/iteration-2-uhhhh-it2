@@ -101,6 +101,14 @@ because of this, add ride validators and form types remain-->
             <textarea class="inputRideInfo" matInput #input id="notesField" placeholder="Notes"
                       [(ngModel)]="rideNotes" formControlName="notes"></textarea>
           </mat-form-field>
+          <br/>
+
+          <label> I would prefer my ride to be... </label>
+
+          <br/>
+
+          <mat-checkbox [(ngModel)]="rideNonSmoking" id="tryThis" class="checkboxNonSmoking"
+                        formControlName="nonSmoking"> Non-smoking </mat-checkbox>
 
         </mat-card-content>
 
