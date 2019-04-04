@@ -19,14 +19,24 @@ export class RideListComponent implements OnInit {
   // target values used in filtering
   public rideDestination: string;
   public rideOrigin: string;
-  public rideDriving: string;
+  public rideDriving: boolean;
+  public rideNonSmoking: boolean = false; // this defaults the box to be unchecked
 
   // Inject the RideListService into this component.
   constructor(public rideListService: RideListService, public appService : AppService) {
  //   rideListService.addListener(this);
   }
 
-  public filterRides(searchDestination: string, searchOrigin: string): Ride[] {
+  // This method is used in the HTML instead of ngModel, since it solves a problem where
+  // clicking on the checkbox didn't always 'uncheck' the box. Implementing this method with
+  // (click)=toggleNonSmoking, and checked="rideNonSmoking", fixes that bothersome problem.
+  public toggleNonSmoking() {
+    this.rideNonSmoking = !this.rideNonSmoking
+  }
+  //test notes
+
+  public filterRides(searchDestination: string, searchOrigin: string,
+                     searchIsDriving: boolean, searchNonSmoking): Ride[] {
 
     this.filteredRides = this.rides;
 
@@ -47,6 +57,22 @@ export class RideListComponent implements OnInit {
         return !searchOrigin || ride.origin.toLowerCase().indexOf(searchOrigin) !== -1;
       });
     }
+
+    if (searchIsDriving != null) {
+
+      this.filteredRides = this.filteredRides.filter(ride => {
+        return ride.isDriving === searchIsDriving;
+      });
+    }
+
+    // We only check for true, so that an unchecked box allows all rides to come through.
+    if (searchNonSmoking === true) {
+
+      this.filteredRides = this.filteredRides.filter(ride => {
+        return ride.nonSmoking === searchNonSmoking;
+      });
+    }
+
     return this.filteredRides;
   }
 
@@ -60,11 +86,12 @@ export class RideListComponent implements OnInit {
     //
     // Subscribe waits until the data is fully downloaded, then
     // performs an action on it (the first lambda)
+
     const rides: Observable<Ride[]> = this.rideListService.getRides();
     rides.subscribe(
       rides => {
         this.rides = rides;
-        this.filterRides(this.rideDestination, this.rideOrigin);
+        this.filterRides(this.rideDestination, this.rideOrigin, this.rideDriving, this.rideNonSmoking);
       },
       err => {
         console.log(err);
@@ -73,7 +100,7 @@ export class RideListComponent implements OnInit {
   }
 
   loadService(): void {
-    this.rideListService.getRides(this.rideDriving).subscribe(
+    this.rideListService.getRides().subscribe(
       rides => {
         this.rides = rides;
       },
