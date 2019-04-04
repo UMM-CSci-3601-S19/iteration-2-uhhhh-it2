@@ -17,21 +17,24 @@ export class EditRideComponent implements OnInit {
 
   public rides: Ride[];
 
-  public ride: Ride = {
-    _id: '',
-    driver: '',
-    notes: '',
-    seatsAvailable: 0,
-    origin: '',
-    destination: '',
-    departureDate: '',
-    departureTime: '',
-    isDriving: null,
-    nonSmoking: null
-  };
+  public ride: Ride = this.rideListComponent.singleRide;
+  //   {
+  //   _id: '',
+  //   driver: '',
+  //   notes: '',
+  //   seatsAvailable: 0,
+  //   origin: '',
+  //   destination: '',
+  //   departureDate: '',
+  //   departureTime: '',
+  //   isDriving: null,
+  //   nonSmoking: null
+  // };
+
+
 
   private highlightedID: string = '';
-  private returnedRide: string = '';
+
 
   public rideDriver: string;
   public rideNotes: string;
@@ -45,27 +48,29 @@ export class EditRideComponent implements OnInit {
   // Please keep this as the default value, or you will have problems with form validation / seats available as a rider.
   public isDriving: true;
   constructor(public rideListService: RideListService,
-              public validatorService: ValidatorService) { }
+              public validatorService: ValidatorService,
+              public rideListComponent: RideListComponent) { }
 
-  retrieveRide(ride: Ride): void {
-    this.ride = ride;
-    console.log("The requested Ride: " + this.ride);
-    // console.log("The GET retrieves all this JSON:" + this.rideListService.retrieveExistingRide(this.requestedID));
-  }
+  // retrieveRide(ride: Ride): void {
+  //   this.ride = ride;
+  //   console.log("The requested Ride: " + this.ride);
+  //   // console.log("The GET retrieves all this JSON:" + this.rideListService.retrieveExistingRide(this.requestedID));
+  // }
 
   editRide(): void {
-    const editedRide: Ride = {
-      _id: this.ride._id,
-      driver: this.rideDriver,
-      notes: this.rideNotes,
-      seatsAvailable: this.rideSeats,
-      origin: this.rideOrigin,
-      destination: this.rideDestination,
-      departureDate: this.rideDepartureDate,
-      departureTime: this.rideDepartureTime,
-      isDriving: this.isDriving,
-      nonSmoking: this.rideNonSmoking,
-    };
+    const editedRide: Ride = this.ride;
+    //   {
+    //   _id: this.ride._id,
+    //   driver: this.rideDriver,
+    //   notes: this.rideNotes,
+    //   seatsAvailable: this.rideSeats,
+    //   origin: this.rideOrigin,
+    //   destination: this.rideDestination,
+    //   departureDate: this.rideDepartureDate,
+    //   departureTime: this.rideDepartureTime,
+    //   isDriving: this.isDriving,
+    //   nonSmoking: this.rideNonSmoking,
+    // };
 
     console.log("Edited ride: " + editedRide);
 
