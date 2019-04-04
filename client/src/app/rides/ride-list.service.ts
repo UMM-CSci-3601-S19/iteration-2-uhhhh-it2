@@ -31,12 +31,8 @@ export class RideListService {
       responseType: 'text' as 'json'
     };
 
-
     // Send post request to add a new user with the user data as the body with specified headers.
-
-    //this.rlc.refreshRides();
     const id = this.http.post<string>(this.rideUrl + '/new', newRide, httpOptions);
-    console.log("ADD (POST) ID: " + id);
     return id;
   }
 
@@ -52,17 +48,14 @@ export class RideListService {
       responseType: 'text' as 'json'
     };
 
-    console.log("got here");
-    const id = this.http.post<string>(this.rideUrl + '/' + idOfRide, existingRideEdited, httpOptions);
-    console.log("EDIT (POST) ID: " + id);
+    const id = this.http.post<string>(this.rideUrl + '/edit/' + idOfRide, existingRideEdited, httpOptions);
+    console.log(this.rideUrl + '/edit/' + idOfRide);
     return id;
   }
 
   retrieveExistingRide(idOfRide: string): Observable<Ride> {
-
-    // const id = this.http.get<string>(this.rideUrl + '/' + idOfRide, httpOptions);
+    console.log(this.rideUrl + '/' + idOfRide);
     const id = this.http.get<Ride>(this.rideUrl + '/' + idOfRide);
-    console.log("RETRIEVE (GET) ID: " + id);
     return id;
   }
 }
