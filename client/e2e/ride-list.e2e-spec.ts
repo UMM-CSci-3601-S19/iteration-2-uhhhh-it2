@@ -1,6 +1,7 @@
 import {RidePage} from './ride-list.po';
 import {browser, protractor, element, by} from 'protractor';
 import {Key} from 'selenium-webdriver';
+import {Failure} from "codelyzer/walkerFactory/walkerFactory";
 
 // This line (combined with the function that follows) is here for us
 // to be able to see what happens (part of slowing things down)
@@ -22,17 +23,62 @@ browser.driver.controlFlow().execute = function () {
   return origFn.apply(browser.driver.controlFlow(), args);
 };
 
+describe('Test google authentification', () => {
+  let page: RidePage;
+
+  beforeEach(()=>{
+    page = new RidePage();
+  })
+
+  it('Should see the rides page once isSignedIn is assigned \'true\'', ()=>
+  {
+    browser.executeScript("window.localStorage.setItem('isSignedIn','true')");
+
+    page.navigateTo();
+    expect(page.getRideTitle()).toBe('Upcoming Rides');
+  });
+
+  it('Should see the addrides page once isSignedIn is assigned \'true\'',()=>{
+    browser.executeScript("window.localStorage.setItem('isSignedIn','true')");
+    page.navigateTo();
+    page.click('add-ride-button');
+    expect(page.getAddRideTitle()).toBe('Add a Ride');
+  });
+
+  it('Sign out should set isSignedIn to false and send you to the home page, as well as hiding the rides when you are signed out.', ()=>{
+    page.navigateTo();
+    browser.executeScript("window.localStorage.setItem('isSignedIn','true')");
+    page.click('sign-out-button');
+    expect(page.elementExistsWithId('login-title')).toEqual(true);
+    page.navigateTo();
+
+    element.all(by.className("add-a-ride-button-class" )).each(function(element, index) {
+      element.getText().then(function(text) {
+
+        if (text.toString().includes("Create a ride")) {
+          fail()
+        }
+        else{
+            expect(true).toBe(true);
+           }
+      });
+
+  });
+
+});
+
 
 describe('Organize rides by soonest to latest', () => {
   let page: RidePage;
 
   beforeEach(() => {
     page = new RidePage();
-    browser.executeScript("window.localStorage.setItem('isSignedIn','true')")
+    browser.executeScript("window.localStorage.setItem('isSignedIn','true')");
     browser.executeScript("window.localStorage.setItem('userID', 'defaultUserID')");
     browser.executeScript("window.localStorage.setItem('userFirstName','Patrick')");
     browser.executeScript("window.localStorage.setItem('userLastName', 'Bateman')");
   });
+
 
   // The ride list SHOULD be organized with rides CLOSER TO OUR TIME at the top, and rides FURTHER FROM OUR TIME
   // towards the bottom. We made 3 pre-defined rides that should appear in this order. The drivers are, "Hollie Past",
@@ -100,7 +146,7 @@ describe('Organize rides by soonest to latest', () => {
     let futureFound = false;
 
     page.navigateTo();
-    element.all(by.className("rides")).each(function(element, index) {
+    element.all(by.className("rides" )).each(function(element, index) {
       element.getText().then(function(text) {
 
         if (text.toString().includes("Hollie Past")) {
@@ -113,6 +159,7 @@ describe('Organize rides by soonest to latest', () => {
         }
       });
     });
+
   });
 
 
@@ -168,7 +215,7 @@ describe('Using filters on Ride Page', () => {
     page.navigateTo();
     page.getElementById("rideOrigin").sendKeys("IA");
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(4);
+      expect(rides.length).toBe(3);
     });
   });
 
@@ -184,7 +231,7 @@ describe('Using filters on Ride Page', () => {
     page.navigateTo();
     page.click("isNotDrivingButton");
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(3);
+      expect(rides.length).toBe(2);
     });
   });
 
@@ -192,11 +239,11 @@ describe('Using filters on Ride Page', () => {
     page.navigateTo();
     page.getElementById("checkboxNonSmoking").click(); // toggle non-smoking ON...
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(5);
+      expect(rides.length).toBe(4);
     });
     page.getElementById("checkboxNonSmoking").click(); // toggle non-smoking OFF...
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(6);
+      expect(rides.length).toBe(5);
     });
   });
 
@@ -208,27 +255,27 @@ describe('Using filters on Ride Page', () => {
     page.navigateTo();
 
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(6);
+      expect(rides.length).toBe(5);
     });
 
     page.getElementById("rideOrigin").sendKeys("u");
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(5);
+      expect(rides.length).toBe(4);
     });
 
     page.getElementById("checkboxNonSmoking").click(); // toggle non-smoking ON
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(4);
+      expect(rides.length).toBe(3);
     });
 
     page.getElementById("isNotDrivingButton").click();
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(3);
+      expect(rides.length).toBe(2);
     });
 
     page.getElementById("rideDestination").sendKeys("w");
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(2);
+      expect(rides.length).toBe(1);
     });
 
     page.getElementById("rideDestination").sendKeys("8");
@@ -260,7 +307,7 @@ describe('Using filters on Ride Page', () => {
 
     page.getElementById("isNotDrivingButton").click(); // should give us our remaining three rides (offered)
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(3);
+      expect(rides.length).toBe(2);
     });
   });
 
@@ -381,8 +428,8 @@ describe('Add Ride', () => {
     // JohnDoe (the latest ride with a date provided).
     // This test is similar to the "organize rides soonest to latest" tests
 
-    element.all(by.className("rides")).each(function(element, index) {
-      element.getText().then(function(text) {
+    element.all(by.className("rides")).each(function (element, index) {
+      element.getText().then(function (text) {
 
         if (text.toString().includes("JohnDoe")) {
           doeFound = true;
@@ -396,7 +443,7 @@ describe('Add Ride', () => {
     });
 
   });
-
+})
 });
 
 
