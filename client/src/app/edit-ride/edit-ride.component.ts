@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Ride} from '../rides/ride';
 import {ValidatorService} from '../validator.service';
 import {Observable} from "rxjs/Observable";
@@ -16,6 +16,7 @@ import {RideListService} from "../rides/ride-list.service";
 export class EditRideComponent implements OnInit {
 
   public rides: Ride[];
+  public reqID = this.rideListComponent.requestedID;
 
   public rideID: string = '';
   public ride: Ride = {
@@ -31,10 +32,8 @@ export class EditRideComponent implements OnInit {
     nonSmoking: null
   };
 
-
   private highlightedID: string = '';
-  private returnedRide: string = 'ride';
-
+  private returnedRide: string = '';
 
   public rideDriver: string;
   public rideNotes: string;
@@ -47,13 +46,15 @@ export class EditRideComponent implements OnInit {
 
   // Please keep this as the default value, or you will have problems with form validation / seats available as a rider.
   public isDriving: true;
-  constructor(public rideListService: RideListService, public validatorService: ValidatorService, public rideListComponent: RideListComponent) { }
+  constructor(public rideListService: RideListService,
+              public validatorService: ValidatorService,
+              public rideListComponent: RideListComponent) { }
 
   editRide(): void {
     const editedRide: Ride = {
-      _id: this.rideListComponent.requestedID,
+      _id: this.ride._id,
       driver: this.rideDriver,
-      notes: this.rideListComponent.requestedID,
+      notes: this.rideNotes,
       seatsAvailable: this.rideSeats,
       origin: this.rideOrigin,
       destination: this.rideDestination,
@@ -63,10 +64,10 @@ export class EditRideComponent implements OnInit {
       nonSmoking: this.rideNonSmoking,
     };
 
-    console.log('Edited ride: ' + editedRide);
+    console.log("Edited ride: " + editedRide);
 
     if (editedRide != null) {
-      this.rideListService.editExistingRide(editedRide, this.rideListComponent.requestedID).subscribe(
+      this.rideListService.editExistingRide(editedRide, "5c832bec3f173391643a15f1").subscribe(
       // this.rideListService.addNewRide(editedRide).subscribe(
         result => {
           this.highlightedID = result;
@@ -93,7 +94,8 @@ export class EditRideComponent implements OnInit {
   };
 
   showExistingRide() {
-    this.rideListService.retrieveExistingRide("5c832bec26656a20be5ec19a").subscribe(
+    console.log("THIS SHOULD BE THE RIDE ID: " + this.reqID);
+    this.rideListService.retrieveExistingRide("5c832bec3f173391643a15f1").subscribe(
       // result => {
       // this.returnedRide = result;
       // console.log("the result" + result);
@@ -107,14 +109,19 @@ export class EditRideComponent implements OnInit {
       // (data: String) => console.log(data))
       (data: Ride) => {
         console.log(data);
-        this.ride.driver = data.driver;
         this.ride._id = data._id['$oid'];
-
+        this.ride.driver = data.driver;
+        this.ride.notes = data.notes;
+        this.ride.seatsAvailable = data.seatsAvailable;
+        this.ride.origin = data.origin;
+        this.ride.destination = data.destination;
+        this.ride.departureDate = data.departureDate;
+        this.ride.departureTime = data.departureTime;
+        this.ride.isDriving = data.isDriving;
+        this.ride.nonSmoking = data.nonSmoking;
       });
 
-
-
-    console.log(this.ride);
+    console.log("Ride reconstructed from GET" + this.ride);
 
   };
 

@@ -81,7 +81,9 @@ public class Server {
     get("api/rides", rideRequestHandler::getRides);
     get("api/rides/:id", rideRequestHandler::getRideJSON);
     post("api/rides/new", rideRequestHandler::addNewRide);
-    put("api/rides/edit", rideRequestHandler::editExistingRide);
+
+    //editing a ride
+    post("api/rides/edit/:id", rideRequestHandler::editExistingRide);
 
     // An example of throwing an unhandled exception so you can see how the
     // Java Spark debugger displays errors like this.
