@@ -270,7 +270,7 @@ describe('Using filters on Ride Page', () => {
 
     page.getElementById("isNotDrivingButton").click();
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(1);
+      expect(rides.length).toBe(2);
     });
 
     page.getElementById("rideDestination").sendKeys("w");
@@ -291,23 +291,23 @@ describe('Using filters on Ride Page', () => {
     page.getElementById("rideDestination").click();
     page.backspace(2) // erases input in destination
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(2);
+      expect(rides.length).toBe(1);
     });
 
     page.getElementById("checkboxNonSmoking").click(); // toggle non-smoking OFF...
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(3);
+      expect(rides.length).toBe(2);
     });
 
     page.getElementById("rideOrigin").click();
     page.backspace(1) // erases input in origin field.
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(4);
+      expect(rides.length).toBe(3);
     });
 
     page.getElementById("isNotDrivingButton").click(); // should give us our remaining three rides (offered)
     page.getRides().then( (rides) => {
-      expect(rides.length).toBe(1);
+      expect(rides.length).toBe(2);
     });
   });
 
