@@ -18,6 +18,7 @@ dependencies {
   compile 'org.mongodb:mongodb-driver:3.10.1'
   compile 'com.google.apis:google-api-services-oauth2:v1-rev153-1.25.0'
   compile 'com.google.apis:google-api-services-drive:v3-rev156-1.25.0'
+  compile 'com.sun.org.apache.xalan.internal.xsltc.compiler.Constants.REDIRECT_URI'
 
   testCompile 'junit:junit:4.12'
 }
